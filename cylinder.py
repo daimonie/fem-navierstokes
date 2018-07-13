@@ -1,5 +1,5 @@
 import sys;  
-from simple_navier_stokes import simple_navier_stokes;
+from simple_navier_stokes import *; 
 import numpy as np;
 import argparse as argparse;
 import matplotlib.pyplot as plt;
@@ -7,21 +7,19 @@ import time as time;
 
 startTime = time.time();
 
-file_name = "data/cylinder";
+file_name = "data/cylinder/";
+ 
+sns = sns.cylinder.cylinder (file_name);
 
-print(file_name);
-sys.exit(0);
-sns = simple_navier_stokes (file_name);
-
-parser = argparse.ArgumentParser(prog="python simple_navier_stokes_main.py",
-  description = "Initialises and configures a simple navier stokes solver.");
+parser = argparse.ArgumentParser(prog="python cylinder.py",
+  description = "Initialises and configures a simple navier stokes solver for the 2D karman sheet.");
 
 parser.add_argument('--finalTime', '-T', help='Final Time of the program.', type=float, default=0.01)
 parser.add_argument('--numberSteps', '-N', help='Number of steps the program iterates.', type=int, default=1000)
 parser.add_argument('--dynamicViscosity', '-V', help='Fluid dynamic viscosity.', type=float, default=sns.finalTime)
 parser.add_argument('--density', '-D', help='Fluid mass density.', type=float, default=sns.density)
 parser.add_argument('--meshFineness', '-M', help='Fineness of the mesh.', type=int, default=sns.meshFineness)
-parser.add_argument('--visualization', '-S', help='Show visualization? Slows down excecution..', type=bool, default=sns.visualization)
+parser.add_argument('--visualization', '-S', help='Show visualization? Slows down excecution..', type=bool, default=True)
 parser.add_argument('--animationInterval', '-A', help='How often the visualization is updated..', type=int, default=sns.animationInterval)
 args = parser.parse_args();
 

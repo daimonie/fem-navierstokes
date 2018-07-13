@@ -173,6 +173,7 @@ class simple_navier_stokes (object):
         report = "t=%.9f, %d/%d" % (self.time, iteration, self.number_time_steps);
 
         if np.mod(iteration, self.animation_interval) == 0: 
+            plt.clf()
             plt.subplot(311);
             plot(self.current_velocity, title='Velocity %s at Re=%d'% (report, self.reynolds_guess));
             plt.subplot(312);
@@ -192,7 +193,6 @@ class simple_navier_stokes (object):
         plt.plot([], [], 'r-')
         plt.clf(); 
         if self.visualization:
-            plt.clf()
             self.ani = animation.FuncAnimation(self.figure, self.evolve, interval=self.animation_interval) 
             plt.show ();
         else:

@@ -32,6 +32,9 @@ class simple_navier_stokes (object):
         self.visualization = False;
 
         self.animation_interval = 1; 
+
+        self.reynolds_guess = -1.0
+
     def reynolds(self, velocity, lengthscale):
         return self.density * velocity * lengthscale / self.dynamic_viscosity;
     def pre_process(self):
@@ -153,7 +156,7 @@ class simple_navier_stokes (object):
 
         solve(self.pressure_correction_variational_problem_matrix, self.current_pressure.vector(), boundary, 'bicgstab', 'hypre_amg');
     def velocity_correction_step(self):
-        boundary =  assemble(self.velocity_correction_variational_problem_matrix);
+        boundary =  assemble(self.velocity_correction_variational_problem_right);
         solve(self.velocity_correction_variational_problem_matrix, self.current_velocity.vector(), boundary, 'cg', 'sor');
     def evolve(self, iteration): 
         self.time = iteration * self.delta_time;
@@ -170,20 +173,12 @@ class simple_navier_stokes (object):
         report = "t=%.9f, %d/%d" % (self.time, iteration, self.number_time_steps);
 
         if np.mod(iteration, self.animation_interval) == 0: 
-            plt.clf();
-
             plt.subplot(311);
-            plot(self.current_velocity, title='Velocity %s'% report);
+            plot(self.current_velocity, title='Velocity %s at Re=%d'% (report, self.reynolds_guess));
             plt.subplot(312);
-            plot(self.current_pressure, title='Pressure %s'% report);
+            plot(self.current_pressure, title='Pressure %sat Re=%d'% (report, self.reynolds_guess));
             plt.subplot(313);
-            plot(self.mesh, title = 'Mesh');
-
-            if self.visualization: 
-                plt.show();
-            else:
-                plt.savefig("%s/Reynolds%dIteration%d.png" % (self.file_name, self.reynolds, self.time));
-                plt.close();
+            plot(self.mesh, title = 'Mesh'); 
 
         print "%s.\n" % report; 
         #assign previous
@@ -194,10 +189,14 @@ class simple_navier_stokes (object):
     def show(self):
         """ Calls plt.show() """
         assert(self.pre_processed == True);
+        plt.plot([], [], 'r-')
+        plt.clf(); 
         if self.visualization:
-            plt.plot([], [], 'r-')
+            plt.clf()
             self.ani = animation.FuncAnimation(self.figure, self.evolve, interval=self.animation_interval) 
             plt.show ();
         else:
             for iteration in range(0, self.number_time_steps):
                 self.evolve(iteration);
+                plt.savefig("%s/Reynolds%dIteration%d.png" % (self.file_name, self.reynolds_guess, iteration));
+                plt.close();

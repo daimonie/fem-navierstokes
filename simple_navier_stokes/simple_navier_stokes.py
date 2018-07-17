@@ -176,13 +176,13 @@ class simple_navier_stokes (object):
             if self.visualization:
                 plt.clf()
             plt.subplot(311);
-            plot(self.current_velocity, title='Velocity %s at Re=%d'% (report, self.reynolds_guess));
+            plot(np.abs(self.current_velocity[0]), title='Velocity X %s at Re=%d'% (report, self.reynolds_guess));
 
             plt.subplot(312);
-            plot(self.current_pressure, title='Pressure %sat Re=%d'% (report, self.reynolds_guess));
+            plot(np.abs(self.current_velocity[1]), title='Velocity Y %s at Re=%d'% (report, self.reynolds_guess));
             
             plt.subplot(313);
-            plot(self.mesh, title = 'Mesh'); 
+            plot(self.current_pressure, title='Pressure %sat Re=%d'% (report, self.reynolds_guess));
 
             if self.visualization == False:
                 plt.savefig("%s/Reynolds%dIteration%d.png" % (self.file_name, self.reynolds_guess, iteration));

@@ -30,8 +30,7 @@ class cylinder(simple_navier_stokes):
         self.mesh = generate_mesh(domain, self.mesh_fineness)
  
         self.reynolds_guess = self.reynolds(1.5,  self.cylinder_radius)
-
-        print self.reynolds_guess
+ 
 
     def create_inflow_profile (self):
         self.inflow_profile_expression = ('4.0*1.5*x[1]*(%.3f - x[1]) / pow(%.3f, 2)' %(self.channel_width, self.channel_width), '0')

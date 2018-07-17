@@ -36,6 +36,7 @@ try:
 	print "PreProcessing Simple NavierStokes. \n";
 	sns.pre_process ();
 	
+	print "At reynolds=%d." % sns.reynolds_guess
 	sns.show();
 except AssertionError:
 	print "Assertion Error was thrown. Likely, simple_navier_stokes was not preprocessed. \n";

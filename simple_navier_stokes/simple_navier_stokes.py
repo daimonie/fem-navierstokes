@@ -177,8 +177,10 @@ class simple_navier_stokes (object):
                 plt.clf()
             plt.subplot(311);
             plot(self.current_velocity, title='Velocity %s at Re=%d'% (report, self.reynolds_guess));
+
             plt.subplot(312);
             plot(self.current_pressure, title='Pressure %sat Re=%d'% (report, self.reynolds_guess));
+            
             plt.subplot(313);
             plot(self.mesh, title = 'Mesh'); 
 

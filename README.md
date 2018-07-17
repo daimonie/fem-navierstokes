@@ -8,11 +8,6 @@ vortices. The second is a Kaman vortex sheet simulation, the same pipe with a sp
 (Re>90) this should induce the formation of a vortex sheet. 
 
 
-
-
-
-
-
 # source
 FENICS project tutorial: https://fenicsproject.org/pub/tutorial/html/._ftut1009.html
 

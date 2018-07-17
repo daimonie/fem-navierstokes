@@ -173,7 +173,8 @@ class simple_navier_stokes (object):
         report = "t=%.9f, %d/%d" % (self.time, iteration, self.number_time_steps);
 
         if np.mod(iteration, self.animation_interval) == 0: 
-            plt.clf()
+            if self.visualization:
+                plt.clf()
             plt.subplot(311);
             plot(self.current_velocity, title='Velocity %s at Re=%d'% (report, self.reynolds_guess));
             plt.subplot(312);
@@ -181,6 +182,9 @@ class simple_navier_stokes (object):
             plt.subplot(313);
             plot(self.mesh, title = 'Mesh'); 
 
+            if self.visualization == False:
+                plt.savefig("%s/Reynolds%dIteration%d.png" % (self.file_name, self.reynolds_guess, iteration));
+                plt.close();
         print "%s.\n" % report; 
         #assign previous
 
@@ -198,5 +202,3 @@ class simple_navier_stokes (object):
         else:
             for iteration in range(0, self.number_time_steps):
                 self.evolve(iteration);
-                plt.savefig("%s/Reynolds%dIteration%d.png" % (self.file_name, self.reynolds_guess, iteration));
-                plt.close();

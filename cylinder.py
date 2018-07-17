@@ -16,7 +16,7 @@ parser = argparse.ArgumentParser(prog="python cylinder.py",
 
 parser.add_argument('--final_time', '-T', help='Final Time of the program.', type=float, default=1.0)
 parser.add_argument('--numberSteps', '-N', help='Number of steps the program iterates.', type=int, default=1000)
-parser.add_argument('--dynamicViscosity', '-V', help='Fluid dynamic viscosity.', type=float, default=sns.final_time)
+parser.add_argument('--dynamicViscosity', '-V', help='Fluid dynamic viscosity.', type=float, default=sns.dynamic_viscosity)
 parser.add_argument('--density', '-D', help='Fluid mass density.', type=float, default=sns.density)
 parser.add_argument('--meshFineness', '-M', help='Fineness of the mesh.', type=int, default=sns.mesh_fineness)
 parser.add_argument('--visualization', '-S', help='Show visualization? Slows down excecution..', type=int, default=1)
@@ -31,6 +31,7 @@ sns.density 			= args.density;
 sns.mesh_fineness 		= args.meshFineness;
 sns.visualization 		= args.visualization==1;
 sns.animation_interval 	= args.animationInterval;
+
 try:
 	print "PreProcessing Simple NavierStokes. \n";
 	sns.pre_process ();
